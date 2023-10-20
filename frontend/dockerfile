@@ -1,0 +1,20 @@
+# utilisation de node 16 pour la version LTS stable
+FROM node:16.13.0
+
+# Set environment variables for the app directory
+ENV APP_HOME=/home/golden-rules
+
+# Create the app directory and set it as the working directory
+WORKDIR $APP_HOME
+
+# Switch to root user to allow access to the app directory
+USER root:root
+
+# Copy the entrypoint script into the app directory
+COPY . $APP_HOME
+
+RUN npm install
+
+# Command that will be run when the container starts, it starts the flask app on port 5000
+CMD [ "npm","run","build"]
+
