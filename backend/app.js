@@ -31,6 +31,17 @@ app.get('/api/', (req, res) => {
   res.send('Hello world');
 });
 
+// Route pour ajouter une règle
+app.post('/api/add', async (req, res) => {
+    const newRule = new Rule(req.body);
+    try {
+        const savedRule = await newRule.save();
+        res.status(201).json(savedRule);
+    } catch (err) {
+        res.status(400).json(err);
+    }
+});
+
 // Route pour récupérer tous les Rule
 app.get('/api/all', async (req, res) => {
   try {
