@@ -8,10 +8,49 @@ services:
       - ./frontend/build:/home/golden-rules/build
     
   http:
+    restart: always
     image: nginx
     volumes:
       - ./frontend/build:/usr/share/nginx/html
+      - ./nginx/conf.d:/etc/nginx/conf.d
     ports:
       - 80:80
+    networks:
+      - backend-network
+
     depends_on:
       - frontend
+      - backend
+
+  backend:
+    restart: always
+    build:
+      context: backend
+    
+    networks:
+      - backend-network
+      - bdd-network
+
+    depends_on:
+      - mongo
+
+  mongo:
+    restart: always
+    image: mongo:4.2.0
+    volumes:
+      - ./data:/data/db
+    expose:
+      - 3306
+    networks:
+      - bdd-network
+      - express-mongo
+
+volumes:
+  data:
+
+
+networks:
+  backend-network:
+  bdd-network:
+  express-mongo:
+  
