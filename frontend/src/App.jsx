@@ -13,7 +13,27 @@ function App() {
   const [rules, setRules] = useState();
 
   useEffect(() => {
-    setRules(data);
+    // Utilisez la fonction fetch pour faire une requête GET à l'API
+    fetch("/api/all")
+      .then((response) => {
+        // Vérifiez si la requête a réussi
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        // Parsez la réponse JSON
+        return response.json();
+      })
+      .then((data) => {
+        // Mettez à jour l'état avec les données
+        setRules(data);
+      })
+      .catch((error) => {
+        // Gérez les erreurs
+        console.error(
+          "There has been a problem with your fetch operation:",
+          error
+        );
+      });
   }, []);
 
   return (
