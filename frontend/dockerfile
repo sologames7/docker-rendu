@@ -1,20 +1,21 @@
-# utilisation de node 16 pour la version LTS stable
+# On veut un front en react donc on utilise node comme image de base
 FROM node:16.13.0
 
-# Set environment variables for the app directory
+# On définit le répertoire de travail dans une variable d'environnement
 ENV APP_HOME=/home/golden-rules
 
-# Create the app directory and set it as the working directory
+# On crée et se place dans le répertoire de travail
 WORKDIR $APP_HOME
 
-# Switch to root user to allow access to the app directory
+# On définit l'utilisateur qui va exécuter les commandes suivantes
 USER root:root
 
-# Copy the entrypoint script into the app directory
+# On copie les fichiers necessaires pour le frontend dans le répertoire de travail
 COPY . $APP_HOME
 
+# On installe les dépendances
 RUN npm install
 
-# Command that will be run when the container starts, it starts the flask app on port 5000
+# On build le projet react
 CMD [ "npm","run","build"]
 

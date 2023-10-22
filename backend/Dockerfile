@@ -1,16 +1,17 @@
+# on part de l'image officielle de node
 FROM node:14
 
-# Définissez le répertoire de travail dans le conteneur
+# on crée et se place dans le répertoire de travail
 WORKDIR /usr/src/app
 
-# Installez les dépendances de l'application
+# On installe les dépendances de l'application (express, mongoose, body-parser)
 RUN npm install express mongoose body-parser
 
-# Copiez tous les fichiers de l'application dans le répertoire de travail
+# On copie les fichiers necessaires pour le backend dans le répertoire de travail (ici app.js)
 COPY . .
 
-# Exposez le port sur lequel l'application sera accessible
+# Le port sur lequel l'application va écouter
 EXPOSE 3000
 
-# Définissez la commande pour exécuter l'application
+# la commande pour lander le bakcend (API)
 CMD [ "node", "app.js" ]

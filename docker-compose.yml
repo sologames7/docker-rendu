@@ -1,56 +1,77 @@
+# Vesion de docker-compose utilisé pour le projet
 version: '3.3'
 
+# Services est la liste des containers utilisés pour le projet
 services:
+
   frontend:
+    # build context est le dossier ou se trouve le Dockerfile du container ainsi que les fichiers nécessaires à la construction de l'image
     build:
       context: frontend
+
+    # volumes partagé avec le container nginx pour que les fichiers de build soient accessible par nginx
     volumes:
       - ./frontend/build:/home/golden-rules/build
     
   http:
+    # restart permet de relancer le container si il s'arrête
     restart: always
     image: nginx
     volumes:
+    # volumes partagé avec le container frontend pour que les fichiers de build soient accessible par nginx
       - ./frontend/build:/usr/share/nginx/html
+    # volumes partagé avec le container nginx pour que les fichiers de configuration soient accessible par nginx
       - ./nginx/conf.d:/etc/nginx/conf.d
+    
+    # port d'entré unique de l'application 
     ports:
       - 80:80
+    
     networks:
+    # réseau partagé avec le container frontend pour que les deux containers puissent communiquer
       - backend-network
 
+    # http attend que les containers frontend et backend soient lancés pour se lancer
     depends_on:
       - frontend
       - backend
 
   backend:
+    # restart permet de relancer le container si il s'arrête
     restart: always
     build:
+    # build context est le dossier ou se trouve le Dockerfile du container ainsi que les fichiers nécessaires à la construction de l'image
       context: backend
     
+    # le backend communique avec le container mongo (bdd) et le container http
     networks:
       - backend-network
       - bdd-network
 
+    # le backend attend que le container mongo (bdd) soit lancé pour se lancer
     depends_on:
       - mongo
 
   mongo:
+    # restart permet de relancer le container si il s'arrête
     restart: always
+    # image utilisé pour le container (docker hub)
     image: mongo:4.2.0
+
+    # volumes partagé avec le container mongo pour que les données de la base de données soient persistantes
     volumes:
       - ./data:/data/db
-    expose:
-      - 3306
+    
+    # le container mongo (bdd) communique avec le container backend
     networks:
       - bdd-network
-      - express-mongo
 
 volumes:
+  # data est le dossier dans lequel sont stockées les données de la base de données mongo
   data:
 
-
+# réseaux utilisés pour le projet
 networks:
   backend-network:
   bdd-network:
-  express-mongo:
   

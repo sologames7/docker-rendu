@@ -12,23 +12,23 @@ import data from "./data/data.json";
 function App() {
   const [rules, setRules] = useState();
 
+  // ce useEffect permet de récupérer les règles dans la base de données au chargement de l'application
   useEffect(() => {
-    // Utilisez la fonction fetch pour faire une requête GET à l'API
+    //on utilise la méthode fetch pour récupérer les données de la base de données à la route /api/all
     fetch("/api/all")
+      //on vérifie que la réponse est ok
       .then((response) => {
-        // Vérifiez si la requête a réussi
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        // Parsez la réponse JSON
         return response.json();
       })
+      //on met à jour les règles avec les données récupérées
       .then((data) => {
-        // Mettez à jour l'état avec les données
         setRules(data);
       })
+      //on affiche une erreur si la réponse n'est pas ok
       .catch((error) => {
-        // Gérez les erreurs
         console.error(
           "There has been a problem with your fetch operation:",
           error
@@ -36,32 +36,34 @@ function App() {
       });
   }, []);
 
+  // ce useEffect permet de mettre à jour les règles dans la base de données quand on ajoute, modifie ou supprime une règle
   useEffect(() => {
-    // Mettre à jour la bdd
-    // Vérifiez d'abord si `rules` n'est pas vide ou null
+    // on vérifie que les règles existent et qu'il y en a au moins une
     if (rules && rules.length > 0) {
-      // Utilisez la fonction fetch pour faire une requête POST à l'API
+      // on utilise la méthode fetch pour envoyer les données de la base de données à la route /api/push
       fetch("/api/push", {
+        // on précise que la méthode est POST
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        // on transforme les données en JSON
         body: JSON.stringify(rules),
       })
+        // on vérifie que la réponse est ok
         .then((response) => {
-          // Vérifiez si la requête a réussi
           if (!response.ok) {
             throw new Error("Network response was not ok");
           }
-          // Parsez la réponse JSON
+          // on retourne la réponse en JSON
           return response.json();
         })
+        // on affiche un message de succès
         .then((data) => {
-          // Ici, vous pouvez traiter les données retournées par le serveur
           console.log("Les règles ont été enregistrées avec succès", data);
         })
+        // on affiche une erreur si la réponse n'est pas ok
         .catch((error) => {
-          // Gérez les erreurs
           console.error(
             "There has been a problem with your fetch operation:",
             error

@@ -1,7 +1,9 @@
+// impotation des dépendances
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+// Création de l'application express
 const app = express();
 
 // Middleware pour analyser le corps des requêtes HTTP
@@ -26,7 +28,7 @@ const RuleSchema = new mongoose.Schema({
 // Création du modèle
 const Rule = mongoose.model('Rule', RuleSchema);
 
-// Route get hello world
+// Route get hello world pour tester l'API
 app.get('/api/', (req, res) => {
   res.send('Hello world');
 });
@@ -42,7 +44,7 @@ app.post('/api/add', async (req, res) => {
     }
 });
 
-// Route pour récupérer tous les Rule
+// Route pour récupérer tous les règles
 app.get('/api/all', async (req, res) => {
   try {
     const rules = await Rule.find();
@@ -52,7 +54,7 @@ app.get('/api/all', async (req, res) => {
   }
 });
 
-// Route pour push une liste de rule
+// Route pour push une liste de règles en ecrasant les anciennes
 app.post('/api/push', async (req, res) => {
   try {
     // suppression de toutes les règles
