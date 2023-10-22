@@ -14,7 +14,7 @@ const RuleForm = ({ rules, setRules }) => {
     title: id ? rules[id].title : "",
     description: id ? rules[id].description : "",
     titleValid: id ? true : false,
-    descValid: true
+    descValid: true,
   });
 
   function changeField(event) {
@@ -76,8 +76,8 @@ const RuleForm = ({ rules, setRules }) => {
             description: fields.description,
             likes: 0,
             dislikes: 0,
-            tags: []
-          }
+            tags: [],
+          },
         ];
         setRules(tempRules);
         console.log(tempRules);

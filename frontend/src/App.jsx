@@ -36,6 +36,41 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    // Mettre à jour la bdd
+    // Vérifiez d'abord si `rules` n'est pas vide ou null
+    if (rules && rules.length > 0) {
+      // Utilisez la fonction fetch pour faire une requête POST à l'API
+      fetch("/api/push", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(rules),
+      })
+        .then((response) => {
+          // Vérifiez si la requête a réussi
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          // Parsez la réponse JSON
+          return response.json();
+        })
+        .then((data) => {
+          // Ici, vous pouvez traiter les données retournées par le serveur
+          console.log("Les règles ont été enregistrées avec succès", data);
+        })
+        .catch((error) => {
+          // Gérez les erreurs
+          console.error(
+            "There has been a problem with your fetch operation:",
+            error
+          );
+        });
+    }
+    console.log("Les règles ont été mises à jour");
+  }, [rules]);
+
   return (
     <ThemeProvider>
       <BrowserRouter>
