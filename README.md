@@ -1,43 +1,43 @@
-# rendu-docker souleman moreau
+# docker-rendering souleman moreau
 
-### Voici mon rendu docker, j'ai normalement respecté toutes les consignes ! Bonne correction.
-<span style="color: green;">Les changement dans l'app de base liés aux requettes api sont dans /frontend/src/App.jsx (les deux premiers useEffect lignes 15 à 74)</span>
+### Here is my docker rendering, I have normally respected all the instructions! Good correction.
+<span style="color: green;">The changes in the base app related to API requests are in /frontend/src/App.jsx (the first two useEffect lines 15 to 74)</span>
 
-## Prérequis
+## Prerequisites
 
 - docker
 - git
 - curl
-- un terminal
+- a terminal
 
-<!-- ecrire en rouge -->
+<!-- write in red -->
 
 ```diff
-- Attention : si vous avez déjà un serveur qui tourne sur le port 80, il faudra le stopper avant de lancer le docker-compose
+- Warning: if you already have a server running on port 80, you will need to stop it before launching the docker-compose
 ```
 
 ## Installation
 
-### Etape 1
+### Step 1
 
-faire un git clone du projet (dans le dossier de votre choix)
+do a git clone of the project (in the folder of your choice)
 
-### Etape 2
+### Step 2
 
-se placer dans le dossier du projet (cd)
-s'assurer que rien n'est lancé sur votre localhost sur le port 80
+go to the project folder (cd)
+make sure nothing is running on your localhost on port 80
 
-### Etape 3 : lancer le docker-compose
+### Step 3: launch the docker-compose
 
-lancer la commande suivante :
+run the following command:
 
 ```bash
 docker-compose up  --build -d
 ```
 
-### Etape 4 : peupler la bdd
+### Step 4: populate the database
 
-lancer les commandes suivante pour peupler la bdd avec les 4:
+run the following commands to populate the database with the 4:
 
 ```bash
 
@@ -48,11 +48,5 @@ curl -X POST http://localhost/api/add -H "Content-Type: application/json" -d '{"
 ```
 
 ```diff
-- Attention : il faut au moins une regle dans le front pour pouvoir en ajouter d'autres il est donc necessaire de peupler la bdd avec au moins une regle
+- Warning: you need at least one rule in the front to be able to add others, so it is necessary to populate the database with at least one rule
 ```
-
-# Dernière étape : Tester le site!
-
-rendez vous sur http://localhost pour voir le site (frontend)
-
-rendez vous sur http://localhost/api pour voir l'api (backend)
