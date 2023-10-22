@@ -1,5 +1,8 @@
 # rendu-docker souleman moreau
 
+### Voici mon rendu docker, j'ai normalement respecté toutes les consignes ! Bonne correction.
+<span style="color: green;">Les changement dans l'app de base liés aux requettes api sont dans /frontend/src/App.jsx (les deux premiers useEffect lignes 15 à 74)</span>
+
 ## Prérequis
 
 - docker
